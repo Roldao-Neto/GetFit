@@ -50,7 +50,6 @@ class Usuario(SQLModel, table=True):
     )
     formulario: 'Formulario' = Relationship(back_populates='paciente')
 
-
 class Notificacao(SQLModel, table = True):
     __tablename__ = "notificacao"
     id: int | None = Field(default=None, primary_key=True)
@@ -136,7 +135,6 @@ class Formulario(SQLModel, table = True):
 
     id_paciente: int | None = Field(default=None, primary_key=True, foreign_key="usuario.id")
     paciente: 'Usuario' = Relationship(back_populates='formulario')
-
 
 if __name__ == "__main__":
     usuario_bd="getfit"
