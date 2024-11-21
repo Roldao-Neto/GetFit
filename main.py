@@ -246,5 +246,3 @@ async def get_idFormulario(id_paciente: str, se: SessionDep) -> Formulario:
     if not s:
         raise HTTPException(status_code=404)
     return s
-
-#put_id ???
