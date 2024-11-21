@@ -246,3 +246,109 @@ async def get_idFormulario(id_paciente: str, se: SessionDep) -> Formulario:
     if not s:
         raise HTTPException(status_code=404)
     return s
+
+#putid
+# Atualizar usuário
+@app.put("/usuario/{id}")
+async def updateUsuario(id: str, usuario: Usuario, se: SessionDep) -> Usuario:
+    usuario_db = se.get(Usuario, id)
+    if not usuario_db:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    
+    for key, value in usuario.dict(exclude_unset=True).items():
+        setattr(usuario_db, key, value)
+    
+    se.add(usuario_db)
+    se.commit()
+    se.refresh(usuario_db)
+    return usuario_db
+
+# Atualizar notificação
+@app.put("/notificacao/{id}")
+async def updateNotificacao(id: str, notificacao: Notificacao, se: SessionDep) -> Notificacao:
+    notificacao_db = se.get(Notificacao, id)
+    if not notificacao_db:
+        raise HTTPException(status_code=404, detail="Notificação não encontrada")
+    
+    for key, value in notificacao.dict(exclude_unset=True).items():
+        setattr(notificacao_db, key, value)
+    
+    se.add(notificacao_db)
+    se.commit()
+    se.refresh(notificacao_db)
+    return notificacao_db
+
+# Atualizar mensagem
+@app.put("/mensagem/{id}")
+async def updateMensagem(id: str, mensagem: Mensagem, se: SessionDep) -> Mensagem:
+    mensagem_db = se.get(Mensagem, id)
+    if not mensagem_db:
+        raise HTTPException(status_code=404, detail="Mensagem não encontrada")
+    
+    for key, value in mensagem.dict(exclude_unset=True).items():
+        setattr(mensagem_db, key, value)
+    
+    se.add(mensagem_db)
+    se.commit()
+    se.refresh(mensagem_db)
+    return mensagem_db
+
+# Atualizar avaliação
+@app.put("/avaliacao/{id}")
+async def updateAvaliacao(id: str, avaliacao: Avaliacao, se: SessionDep) -> Avaliacao:
+    avaliacao_db = se.get(Avaliacao, id)
+    if not avaliacao_db:
+        raise HTTPException(status_code=404, detail="Avaliação não encontrada")
+    
+    for key, value in avaliacao.dict(exclude_unset=True).items():
+        setattr(avaliacao_db, key, value)
+    
+    se.add(avaliacao_db)
+    se.commit()
+    se.refresh(avaliacao_db)
+    return avaliacao_db
+
+# Atualizar consulta
+@app.put("/consulta/{id}")
+async def updateConsulta(id: str, consulta: Consulta, se: SessionDep) -> Consulta:
+    consulta_db = se.get(Consulta, id)
+    if not consulta_db:
+        raise HTTPException(status_code=404, detail="Consulta não encontrada")
+    
+    for key, value in consulta.dict(exclude_unset=True).items():
+        setattr(consulta_db, key, value)
+    
+    se.add(consulta_db)
+    se.commit()
+    se.refresh(consulta_db)
+    return consulta_db
+
+# Atualizar currículo
+@app.put("/curriculo/{id}")
+async def updateCurriculo(id: str, curriculo: Curriculo, se: SessionDep) -> Curriculo:
+    curriculo_db = se.get(Curriculo, id)
+    if not curriculo_db:
+        raise HTTPException(status_code=404, detail="Currículo não encontrado")
+    
+    for key, value in curriculo.dict(exclude_unset=True).items():
+        setattr(curriculo_db, key, value)
+    
+    se.add(curriculo_db)
+    se.commit()
+    se.refresh(curriculo_db)
+    return curriculo_db
+
+# Atualizar formulário
+@app.put("/formulario/{id_paciente}")
+async def updateFormulario(id_paciente: str, formulario: Formulario, se: SessionDep) -> Formulario:
+    formulario_db = se.exec(select(Formulario).where(Formulario.id_paciente == id_paciente)).first()
+    if not formulario_db:
+        raise HTTPException(status_code=404, detail="Formulário não encontrado")
+    
+    for key, value in formulario.dict(exclude_unset=True).items():
+        setattr(formulario_db, key, value)
+    
+    se.add(formulario_db)
+    se.commit()
+    se.refresh(formulario_db)
+    return formulario_db
